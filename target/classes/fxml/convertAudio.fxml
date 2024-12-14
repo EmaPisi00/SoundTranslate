@@ -9,7 +9,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.projects.translate.ui.controller.ConvertAudioController">
     <stylesheets>
-        <URL value="@../css/convertAudio.css" />
+        <URL value="@../css/convertAudio.css"/>
     </stylesheets>
     <!-- Top section (empty) -->
     <top>
@@ -19,12 +19,11 @@
     <!-- Center section (form with button) -->
     <center>
         <VBox alignment="CENTER" spacing="10">
-            <Label text="Select a folder:" styleClass="custom-label"/>
-            <Button text="Choose Folder" onAction="#onChooseFolder" styleClass="custom-button" focusTraversable="false"/>
-            <cursor>
-
-            </cursor>
-            <Button text="Generate Excel File" onAction="#onGenerateExcel" styleClass="custom-button" focusTraversable="false"/>
+            <Label text="Seleziona una cartella:" styleClass="custom-label"/>
+            <Button text="Choose Folder" onAction="#onChooseFolder" styleClass="custom-button"
+                    focusTraversable="false"/>
+            <Button text="Generate Excel File" onAction="#onGenerateExcel" styleClass="custom-button"
+                    focusTraversable="false"/>
         </VBox>
     </center>
 

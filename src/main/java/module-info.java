@@ -12,7 +12,8 @@ module convertToText {
     opens it.projects.translate.ui.controller to javafx.fxml;
     exports it.projects.translate.ui.controller;
 
-    requires javafx.graphics; // Necessario per JavaFX
+    requires javafx.graphics;
+    requires java.logging; // Necessario per JavaFX
 
     exports it.projects.translate.ui to javafx.graphics;
 }

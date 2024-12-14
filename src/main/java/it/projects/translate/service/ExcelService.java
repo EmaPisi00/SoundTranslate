@@ -2,8 +2,6 @@ package it.projects.translate.service;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,10 +9,8 @@ import java.util.List;
 
 public class ExcelService {
 
-    private static final Logger log = LoggerFactory.getLogger(ExcelService.class);
-
     public static void writeTranslationsToExcel(List<String> fileNames, List<String> translations, String filePath) {
-        log.info("Creazione del file Excel in corso: {}", filePath);
+        LoggerService.logToFile("Creazione del file Excel in corso: " + filePath);
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Traduzioni");
 
@@ -28,7 +24,7 @@ public class ExcelService {
             Row row = sheet.createRow(i + 1);
             row.createCell(0).setCellValue(fileNames.get(i));
             row.createCell(1).setCellValue(translations.get(i));
-            log.info("Scritti dati per il file: {}", fileNames.get(i));
+            LoggerService.logToFile("Scritti dati per il file: " + fileNames.get(i));
         }
 
         // Autosize per le colonne
@@ -38,14 +34,14 @@ public class ExcelService {
         // Scrittura su disco
         try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
             workbook.write(fileOut);
-            log.info("File Excel creato con successo: {}", filePath);
+            LoggerService.logToFile("File Excel creato con successo: " + filePath);
         } catch (IOException e) {
-            log.info("Errore durante la scrittura del file Excel: {}", e.getMessage());
+            LoggerService.logToFile("Errore durante la scrittura del file Excel: " + e.getMessage());
         } finally {
             try {
                 workbook.close();
             } catch (IOException e) {
-                log.info("Errore durante la chiusura del workbook: {}", e.getMessage());
+                LoggerService.logToFile("Errore durante la chiusura del workbook: " + e.getMessage());
             }
         }
     }
@@ -61,6 +57,6 @@ public class ExcelService {
         style.setFont(font);
         cell.setCellStyle(style);
 
-        log.info("Creata cella di intestazione per colonna: {}", text);
+        LoggerService.logToFile("Creata cella di intestazione per colonna: " + text);
     }
 }
