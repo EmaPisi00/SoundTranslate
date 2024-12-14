@@ -1,0 +1,47 @@
+Caricamento del modello Vosk da: data/models/vosk-model-en-us-0.22-lgraph
+Lettura dei file audio dalla directory: C:\Users\emanu\IdeaProjects\ConvertFileAudioToText\data\audio
+Trovato file audio: 00000_streaming.wav
+Trovato file audio: 00001_streaming.wav
+Trovato file audio: 00002_streaming.wav
+Avvio del processo di riconoscimento del testo dai file audio.
+Processando il file: 00000_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00000_streaming.wav: {
+  "text" : "who the hell are you another one of doctors euros toys"
+}
+Processando il file: 00001_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00001_streaming.wav: {
+  "text" : "okay come get me if you can"
+}
+Processando il file: 00002_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00002_streaming.wav: {
+  "text" : "i am going to fight like i mean it for once"
+}
+Avvio del processo di traduzione dei testi.
+Traduzione in corso per il testo: {
+  "text" : "who the hell are you another one of doctors euros toys"
+}
+Traduzione completata per il testo: who the hell are you another one of doctors euros toys
+Traduzione completata : chi diavolo sei un altro dei dottori euro giocattoli
+Testo tradotto: chi diavolo sei un altro dei dottori euro giocattoli
+Traduzione in corso per il testo: {
+  "text" : "okay come get me if you can"
+}
+Traduzione completata per il testo: okay come get me if you can
+Traduzione completata : ok vieni a prendermi se puoi
+Testo tradotto: ok vieni a prendermi se puoi
+Traduzione in corso per il testo: {
+  "text" : "i am going to fight like i mean it for once"
+}
+Traduzione completata per il testo: i am going to fight like i mean it for once
+Traduzione completata : combatterò come se lo pensassi davvero per una volta
+Testo tradotto: combatterò come se lo pensassi davvero per una volta
+Creazione del file Excel in corso: C:\Users\emanu\Desktop\fffg.xlsx
+Creata cella di intestazione per colonna: Nome File Audio
+Creata cella di intestazione per colonna: Traduzione
+Scritti dati per il file: 00000_streaming.wav
+Scritti dati per il file: 00001_streaming.wav
+Scritti dati per il file: 00002_streaming.wav
+File Excel creato con successo: C:\Users\emanu\Desktop\fffg.xlsx

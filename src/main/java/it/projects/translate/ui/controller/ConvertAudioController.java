@@ -45,11 +45,11 @@ public class ConvertAudioController {
             AudioRecognitionService audioRecognitionService = new AudioRecognitionService(Constant.MODEL_PATH);
             TranslationService translationService = new TranslationService();
 
-            List<String> fileNames = audioRecognitionService.getFileNames(Constant.AUDIO_DIRECTORY_PATH);
-            List<String> recognizedTexts = audioRecognitionService.getRecognizedTexts(fileNames, Constant.AUDIO_DIRECTORY_PATH);
+            List<String> fileNames = audioRecognitionService.getFileNames(selectedFolder.getAbsolutePath());
+            List<String> recognizedTexts = audioRecognitionService.getRecognizedTexts(fileNames, selectedFolder.getAbsolutePath());
             List<String> translations = translationService.getTranslations(recognizedTexts);
 
-            ExcelService.writeTranslationsToExcel(fileNames, translations, Constant.OUTPUT_FILE_PATH);
+            ExcelService.writeTranslationsToExcel(fileNames, translations, file.getAbsolutePath());
         }
     }
 }

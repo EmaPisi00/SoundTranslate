@@ -20,9 +20,9 @@
     <center>
         <VBox alignment="CENTER" spacing="10">
             <Label text="Seleziona una cartella:" styleClass="custom-label"/>
-            <Button text="Choose Folder" onAction="#onChooseFolder" styleClass="custom-button"
+            <Button text="Scegli una cartella" onAction="#onChooseFolder" styleClass="custom-button"
                     focusTraversable="false"/>
-            <Button text="Generate Excel File" onAction="#onGenerateExcel" styleClass="custom-button"
+            <Button text="Genera File Excel" onAction="#onGenerateExcel" styleClass="custom-button"
                     focusTraversable="false"/>
         </VBox>
     </center>
