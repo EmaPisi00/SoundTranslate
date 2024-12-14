@@ -18,11 +18,13 @@ public class ConvertAudioMain extends Application {
         Parent root = loader.load();
 
         Image image = new Image(String.valueOf(getClass().getResource("/img/icon.jpg")));
-
         primaryStage.getIcons().add(image);
+
         // Imposta la scena e la finestra principale
         primaryStage.setTitle("Convert Audio Tool");
-        primaryStage.setScene(new Scene(root, 800, 600)); // Dimensioni di default
+        primaryStage.setScene(new Scene(root, 831, 661)); // Dimensioni di default
+
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

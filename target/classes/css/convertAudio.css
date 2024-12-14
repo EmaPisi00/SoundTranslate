@@ -11,7 +11,7 @@
 .custom-button {
     -fx-font-size: 14px; /* Imposta la dimensione del font */
     -fx-font-family: 'Arial'; /* Imposta il font */
-    -fx-background-color: #4CAF50; /* Colore di sfondo del pulsante */
+    -fx-background-color: #0127e6; /* Colore di sfondo del pulsante */
     -fx-text-fill: white; /* Colore del testo del pulsante */
     -fx-padding: 10px 20px; /* Padding per dare un po' di spazio interno */
     -fx-border-radius: 20px; /* Angoli molto arrotondati */
@@ -22,18 +22,18 @@
 }
 
 .custom-button:hover {
-    -fx-background-color: #45a049; /* Cambia il colore di sfondo quando si passa sopra il pulsante */
+    -fx-background-color: #0127e6; /* Cambia il colore di sfondo quando si passa sopra il pulsante */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 7, 0, 4, 4); /* Ombra più forte al passaggio del mouse */
 }
 
 .custom-button:focused {
-    -fx-background-color: #2e7d32; /* Colore verde scuro quando il pulsante è in focus */
-    -fx-border-color: #1b5e20; /* Colore del bordo quando in focus */
+    -fx-background-color: #0127e6; /* Colore verde scuro quando il pulsante è in focus */
+    -fx-border-color: #0127e6; /* Colore del bordo quando in focus */
     -fx-border-width: 2px; /* Larghezza del bordo quando in focus */
 }
 
 .custom-button:pressed {
-    -fx-background-color: #388e3c; /* Colore verde quando premuto */
+    -fx-background-color: #0127e6; /* Colore verde quando premuto */
 }
 
 .custom-label {
@@ -44,4 +44,11 @@
     -fx-padding: 10px; /* Distanza dal bordo */
     -fx-margin: 20px; /* Margine per separare il Label dagli altri elementi */
     -fx-alignment: center; /* Allinea il testo al centro */
+}
+
+.body {
+    -fx-background-image: url("../img/sfondo.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
 }
