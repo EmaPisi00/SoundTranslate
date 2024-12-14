@@ -1,5 +1,8 @@
-it\projects\translate\utils\Constant.class
 it\projects\translate\service\TranslationService.class
-it\projects\translate\service\ExcelService.class
+module-info.class
 it\projects\translate\service\AudioRecognitionService.class
+it\projects\translate\utils\Constant.class
+it\projects\translate\service\ExcelService.class
+it\projects\translate\ui\ConvertAudioMain.class
 it\projects\translate\Main.class
+it\projects\translate\ui\controller\ConvertAudioController.class
