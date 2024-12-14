@@ -1,6 +1,7 @@
 package it.projects.translate;
 
 import it.projects.translate.service.ExcelService;
+import org.json.JSONObject;
 import org.vosk.Model;
 import org.vosk.Recognizer;
 
@@ -16,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Percorsi come nel tuo codice
-        String modelPath = "data/models/vosk-model-en-us-0.42-gigaspeech";
+        String modelPath = "data/models/vosk-model-en-us-0.22-lgraph";
         String audioDirectoryPath = "C:\\Users\\emanu\\Desktop\\test";
         String outputFilePath = "C:\\Users\\emanu\\Desktop\\output.xlsx";  // Output in formato Excel
 
@@ -93,9 +94,18 @@ public class Main {
     // Metodo per tradurre il testo usando lo script Python
     private static String traduci(String text) {
         try {
+            JSONObject jsonObject = new JSONObject(text);
+
+            // Estrai il valore associato alla chiave "text"
+            String textFinal = jsonObject.getString("text");
+
             // Costruisci il comando per eseguire lo script Python
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "data/script/translate.py", text);
+            ProcessBuilder processBuilder = new ProcessBuilder("python", "data/script/translate.py", textFinal);
+
+            // Impostiamo un timeout per evitare che il processo rimanga in attesa per sempre
             processBuilder.environment().put("PYTHONIOENCODING", "utf-8");
+
+            // Avvia il processo
             Process process = processBuilder.start();
 
             // Leggi l'output dello script Python
@@ -107,23 +117,29 @@ public class Main {
                 output.append(line);
             }
 
-            // Chiudi il reader
-            reader.close();
-
-            // Estrai la parte dopo "Testo tradotto: "
-            String finalOutput = output.toString();
-            String translatedText = "";
-
-            if (finalOutput.contains("Testo tradotto:")) {
-                // Separare la parte dopo i due punti
-                translatedText = finalOutput.split("Testo tradotto:")[1].trim();
+            // Leggi gli errori, se ci sono
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
+            StringBuilder errorOutput = new StringBuilder();
+            while ((line = errorReader.readLine()) != null) {
+                errorOutput.append(line);
             }
 
-            // Restituisce la traduzione
-            return translatedText;
+            // Controlla se ci sono errori
+            if (!errorOutput.isEmpty()) {
+                System.out.println("Errori dallo script Python: " + errorOutput.toString());
+            }
+
+            // Chiudi i reader
+            reader.close();
+            errorReader.close();
+
+            // Restituisce il risultato tradotto (l'output dello script Python)
+            return output.toString().trim();
         } catch (IOException e) {
             e.printStackTrace();
+            return "Errore nell'esecuzione dello script Python.";
         }
-        return "";
     }
+
+
 }
