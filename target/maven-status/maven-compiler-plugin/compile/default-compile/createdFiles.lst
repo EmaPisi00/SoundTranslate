@@ -1,2 +1,5 @@
-it\projects\translate\Main.class
+it\projects\translate\utils\Constant.class
+it\projects\translate\service\TranslationService.class
 it\projects\translate\service\ExcelService.class
+it\projects\translate\service\AudioRecognitionService.class
+it\projects\translate\Main.class
