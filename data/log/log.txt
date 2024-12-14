@@ -1,47 +1,86 @@
 Caricamento del modello Vosk da: data/models/vosk-model-en-us-0.22-lgraph
-Lettura dei file audio dalla directory: C:\Users\emanu\IdeaProjects\ConvertFileAudioToText\data\audio
+Lettura dei file audio dalla directory: C:\Users\emanu\Downloads\test
 Trovato file audio: 00000_streaming.wav
 Trovato file audio: 00001_streaming.wav
 Trovato file audio: 00002_streaming.wav
+Trovato file audio: 00003_streaming.wav
+Trovato file audio: 00004_streaming.wav
+Trovato file audio: 00005_streaming.wav
 Avvio del processo di riconoscimento del testo dai file audio.
 Processando il file: 00000_streaming.wav
 Risultato finale ottenuto dal riconoscimento audio.
 Testo riconosciuto per 00000_streaming.wav: {
-  "text" : "who the hell are you another one of doctors euros toys"
+  "text" : "the the kunis to that though"
 }
 Processando il file: 00001_streaming.wav
 Risultato finale ottenuto dal riconoscimento audio.
 Testo riconosciuto per 00001_streaming.wav: {
-  "text" : "okay come get me if you can"
+  "text" : "i am"
 }
 Processando il file: 00002_streaming.wav
 Risultato finale ottenuto dal riconoscimento audio.
 Testo riconosciuto per 00002_streaming.wav: {
-  "text" : "i am going to fight like i mean it for once"
+  "text" : ""
+}
+Processando il file: 00003_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00003_streaming.wav: {
+  "text" : "communists ook or no more take your degree she name on me he might you in novato thought bail"
+}
+Processando il file: 00004_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00004_streaming.wav: {
+  "text" : "we're all gonna sunday new chic or silva megumi"
+}
+Processando il file: 00005_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00005_streaming.wav: {
+  "text" : "what does she not circle numb woke tiki thumbing jama monarchy and do more our marketable"
 }
 Avvio del processo di traduzione dei testi.
 Traduzione in corso per il testo: {
-  "text" : "who the hell are you another one of doctors euros toys"
+  "text" : "the the kunis to that though"
 }
-Traduzione completata per il testo: who the hell are you another one of doctors euros toys
-Traduzione completata : chi diavolo sei un altro dei dottori euro giocattoli
-Testo tradotto: chi diavolo sei un altro dei dottori euro giocattoli
+Traduzione completata per il testo: the the kunis to that though
+Traduzione completata : il kunis a questo però
+Testo tradotto: il kunis a questo però
 Traduzione in corso per il testo: {
-  "text" : "okay come get me if you can"
+  "text" : "i am"
 }
-Traduzione completata per il testo: okay come get me if you can
-Traduzione completata : ok vieni a prendermi se puoi
-Testo tradotto: ok vieni a prendermi se puoi
+Traduzione completata per il testo: i am
+Traduzione completata : sono
+Testo tradotto: sono
 Traduzione in corso per il testo: {
-  "text" : "i am going to fight like i mean it for once"
+  "text" : ""
 }
-Traduzione completata per il testo: i am going to fight like i mean it for once
-Traduzione completata : combatterò come se lo pensassi davvero per una volta
-Testo tradotto: combatterò come se lo pensassi davvero per una volta
-Creazione del file Excel in corso: C:\Users\emanu\Desktop\fffg.xlsx
+Traduzione completata per il testo: 
+Traduzione completata : 
+Testo tradotto: 
+Traduzione in corso per il testo: {
+  "text" : "communists ook or no more take your degree she name on me he might you in novato thought bail"
+}
+Traduzione completata per il testo: communists ook or no more take your degree she name on me he might you in novato thought bail
+Traduzione completata : comunisti anche o non più prendere la tua laurea, lei mi nomina, lui potrebbe farti pensare a novato su cauzione
+Testo tradotto: comunisti anche o non più prendere la tua laurea, lei mi nomina, lui potrebbe farti pensare a novato su cauzione
+Traduzione in corso per il testo: {
+  "text" : "we're all gonna sunday new chic or silva megumi"
+}
+Traduzione completata per il testo: we're all gonna sunday new chic or silva megumi
+Traduzione completata : Domenica andremo tutti a New Chic o Silva Megumi
+Testo tradotto: Domenica andremo tutti a New Chic o Silva Megumi
+Traduzione in corso per il testo: {
+  "text" : "what does she not circle numb woke tiki thumbing jama monarchy and do more our marketable"
+}
+Traduzione completata per il testo: what does she not circle numb woke tiki thumbing jama monarchy and do more our marketable
+Traduzione completata : cosa non fa lei, intorpidita, sveglia, tiki, pollice in su, monarchia jama e fa di più del nostro commerciabile
+Testo tradotto: cosa non fa lei, intorpidita, sveglia, tiki, pollice in su, monarchia jama e fa di più del nostro commerciabile
+Creazione del file Excel in corso: C:\Users\emanu\Desktop\gohanJap.xlsx
 Creata cella di intestazione per colonna: Nome File Audio
 Creata cella di intestazione per colonna: Traduzione
 Scritti dati per il file: 00000_streaming.wav
 Scritti dati per il file: 00001_streaming.wav
 Scritti dati per il file: 00002_streaming.wav
-File Excel creato con successo: C:\Users\emanu\Desktop\fffg.xlsx
+Scritti dati per il file: 00003_streaming.wav
+Scritti dati per il file: 00004_streaming.wav
+Scritti dati per il file: 00005_streaming.wav
+File Excel creato con successo: C:\Users\emanu\Desktop\gohanJap.xlsx
