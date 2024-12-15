@@ -29,8 +29,8 @@ public class TranslationService {
             String textToTranslate = jsonObject.getString("text");
 
             // Ottieni il percorso della risorsa
-            ClassLoader classLoader = TranslationService.class.getClassLoader();
-            File scriptFile = new File(Objects.requireNonNull(classLoader.getResource(Constant.SCRIPT_PYTHON_PATH)).getFile());
+            ClassLoader classLoader = AudioRecognitionService.class.getClassLoader();
+            File scriptFile = new File(Objects.requireNonNull(classLoader.getResource(Constant.SCRIPT_PYTHON_PATH)).getFile(), "translate.py");
 
             if (!scriptFile.exists()) {
                 throw new IllegalArgumentException("Script non trovato: " + scriptFile.getAbsolutePath());

@@ -1,0 +1,34 @@
+Caricamento del modello Vosk da: C:\Users\emanu\IdeaProjects\ConvertFileAudioToText\target\classes\models\vosk-model-en-us-0.22-lgraph
+Lettura dei file audio dalla directory: C:\Users\emanu\Downloads\test
+Trovato file audio: 00000_streaming.wav
+Trovato file audio: 00004_streaming.wav
+Avvio del processo di riconoscimento del testo dai file audio.
+Processando il file: 00000_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00000_streaming.wav: {
+  "text" : "how do you like this new form"
+}
+Processando il file: 00004_streaming.wav
+Risultato finale ottenuto dal riconoscimento audio.
+Testo riconosciuto per 00004_streaming.wav: {
+  "text" : "to one is foolishness you perhaps death is a blessing"
+}
+Avvio del processo di traduzione dei testi.
+Traduzione in corso per il testo: {
+  "text" : "how do you like this new form"
+}
+Traduzione completata per il testo: how do you like this new form
+Traduzione completata : come ti piace questa nuova forma?
+Testo tradotto: come ti piace questa nuova forma?
+Traduzione in corso per il testo: {
+  "text" : "to one is foolishness you perhaps death is a blessing"
+}
+Traduzione completata per il testo: to one is foolishness you perhaps death is a blessing
+Traduzione completata : per uno è follia per te forse la morte è una benedizione
+Testo tradotto: per uno è follia per te forse la morte è una benedizione
+Creazione del file Excel in corso: C:\Users\emanu\Downloads\ff.xlsx
+Creata cella di intestazione per colonna: Nome File Audio
+Creata cella di intestazione per colonna: Traduzione
+Scritti dati per il file: 00000_streaming.wav
+Scritti dati per il file: 00004_streaming.wav
+File Excel creato con successo: C:\Users\emanu\Downloads\ff.xlsx

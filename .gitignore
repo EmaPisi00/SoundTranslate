@@ -1,6 +1,6 @@
 # Directory di build
 /target/
-out/
+/out/
 
 # File di configurazione IDE
 /.idea/
