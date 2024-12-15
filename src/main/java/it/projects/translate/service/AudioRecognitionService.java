@@ -51,6 +51,7 @@ public class AudioRecognitionService {
     }
 
     private String recognizeAudio(File audioFile) {
+        String finalResult = "";
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(audioFile));
              AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(bufferedInputStream)) {
 
@@ -62,12 +63,12 @@ public class AudioRecognitionService {
                 recognizer.acceptWaveForm(buffer, buffer.length);
             }
 
-            String finalResult = recognizer.getFinalResult();
+            finalResult = recognizer.getFinalResult();
             LoggerService.logToFile("Risultato finale ottenuto dal riconoscimento audio.");
-            return finalResult;
+
         } catch (Exception e) {
             LoggerService.logToFile("Errore durante il riconoscimento audio: " + e.getMessage());
-            return "";
         }
+        return finalResult;
     }
 }

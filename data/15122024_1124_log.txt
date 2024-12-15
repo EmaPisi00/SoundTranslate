@@ -1,3 +1,4 @@
+Impossibile trovare il percorso specificato
 Caricamento del modello Vosk da: C:\Users\emanu\IdeaProjects\ConvertFileAudioToText\vosk-model-en-us-0.22-lgraph
 Lettura dei file audio dalla directory: C:\Users\emanu\Downloads\test
 Trovato file audio: 00000_streaming.wav
@@ -26,9 +27,9 @@ Traduzione in corso per il testo: {
 Traduzione completata per il testo: to one is foolishness you perhaps death is a blessing
 Traduzione completata : per uno è follia per te forse la morte è una benedizione
 Testo tradotto: per uno è follia per te forse la morte è una benedizione
-Creazione del file Excel in corso: C:\Users\emanu\Desktop\gg.xlsx
+Creazione del file Excel in corso: C:\Users\emanu\Downloads\rgd.xlsx
 Creata cella di intestazione per colonna: Nome File Audio
 Creata cella di intestazione per colonna: Traduzione
 Scritti dati per il file: 00000_streaming.wav
 Scritti dati per il file: 00004_streaming.wav
-File Excel creato con successo: C:\Users\emanu\Desktop\gg.xlsx
+File Excel creato con successo: C:\Users\emanu\Downloads\rgd.xlsx

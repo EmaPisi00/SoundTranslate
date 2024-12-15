@@ -1,13 +1,14 @@
 package it.projects.translate.service;
 
-import it.projects.translate.utils.Constant;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class TranslationService {
 
@@ -24,6 +25,9 @@ public class TranslationService {
     }
 
     private String translate(String text) {
+
+        String translation;
+
         try {
             JSONObject jsonObject = new JSONObject(text);
             String textToTranslate = jsonObject.getString("text");
@@ -48,14 +52,13 @@ public class TranslationService {
             reader.close();
             LoggerService.logToFile("Traduzione completata per il testo: " + textToTranslate);
 
-            String translation = output.toString().trim();
+            translation = output.toString().trim();
 
             LoggerService.logToFile("Traduzione completata : " + translation);
-
-            return translation;
         } catch (IOException e) {
             LoggerService.logToFile("Errore durante la traduzione: " + e.getMessage());
-            return "Errore nella traduzione.";
+            translation = "Errore nella traduzione.";
         }
+        return translation;
     }
 }

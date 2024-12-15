@@ -1,13 +1,15 @@
 package it.projects.translate.service;
 
-import it.projects.translate.utils.Constant;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LoggerService {
+
+    private static String directoryFile;
 
     // Metodo che verifica se è la prima esecuzione
     public static void checkAndCreateLogFile() {
@@ -21,8 +23,11 @@ public class LoggerService {
             }
         }
 
-        // Crea il file di log "log.txt" all'interno della cartella "data"
-        File logFile = new File(dataDirectory, "log.txt");
+        // Crea il file di log "log.txt" all'interno della cartella "data" con annesso orario
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("ddMMyyyy_HHmm");
+        setDirectoryFile("data" + File.separator + dateTimeFormatter.format(now) + "_log.txt");
+        File logFile = new File(dataDirectory, directoryFile);
 
         // Se il file esiste già, non fare nulla (appenderemo i log)
         if (!logFile.exists()) {
@@ -30,25 +35,17 @@ public class LoggerService {
                 boolean fileCreated = logFile.createNewFile();  // Crea il file
                 if (!fileCreated) {
                     System.err.println("Errore nella creazione del file di log");
-                    return;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // Se esiste, cancella il contenuto per il primo avvio dell'app
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, false))) {
-                // Passare 'false' nel FileWriter significa che il file viene sovrascritto
-                writer.write("");  // Sovrascrive il file con una stringa vuota
-            } catch (IOException e) {
-                e.printStackTrace();
+                logToFile(e.getMessage());
+                //e.printStackTrace();
             }
         }
     }
 
     // Metodo per scrivere le loggate nel file
     public static void logToFile(String logMessage) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Constant.LOG_FILE_PATH, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(directoryFile, true))) {
             writer.write(logMessage);
             writer.newLine();  // Aggiunge una nuova riga dopo ogni messaggio
         } catch (IOException e) {
@@ -56,4 +53,9 @@ public class LoggerService {
         }
         System.out.println(logMessage);
     }
+
+    private static void setDirectoryFile(String directoryFile) {
+        LoggerService.directoryFile = directoryFile;
+    }
+
 }
