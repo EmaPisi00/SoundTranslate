@@ -53,71 +53,44 @@ public class ConvertAudioController {
             return;
         }
 
-        // Avvia la selezione del file di output prima di mostrare il ProgressIndicator
+        // Seleziona il file di output
+        File file = chooseOutputFile();
+        if (file == null) {
+            System.out.println("No file selected for saving.");
+            return;
+        }
+
+        // Mostra il ProgressIndicator
+        progressIndicator.setVisible(true);
+
+        // Avvia il task per la generazione dell'Excel
+        startGenerationTask(file);
+    }
+
+    private File chooseOutputFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Excel File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
-        File file = fileChooser.showSaveDialog(new Stage());
+        return fileChooser.showSaveDialog(new Stage());
+    }
 
-        if (file == null) {
-            System.out.println("No file selected for saving.");
-            return;  // Se l'utente non seleziona un file, termina l'operazione.
-        }
-
-        // Mostra il ProgressIndicator dopo che il file è stato selezionato
-        progressIndicator.setVisible(true);
-
-        // Avvia il processo in un thread separato per evitare di bloccare l'interfaccia
+    private void startGenerationTask(File file) {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                try {
-                    // Ottieni il percorso della risorsa
-                    ClassLoader classLoader = AudioRecognitionService.class.getClassLoader();
-                    File modelFile = new File(Objects.requireNonNull(classLoader.getResource("models/vosk-model-en-us-0.22-lgraph")).getFile());
-
-                    if (!modelFile.exists()) {
-                        throw new IllegalArgumentException("Modello non trovato: " + modelFile.getAbsolutePath());
-                    }
-
-                    AudioRecognitionService audioRecognitionService = new AudioRecognitionService(modelFile.getAbsolutePath());
-                    TranslationService translationService = new TranslationService();
-
-                    List<String> fileNames = audioRecognitionService.getFileNames(selectedFolder.getAbsolutePath());
-                    List<String> recognizedTexts = audioRecognitionService.getRecognizedTexts(fileNames, selectedFolder.getAbsolutePath());
-                    List<String> translations = translationService.getTranslations(recognizedTexts);
-
-                    // Scrivi i dati nel file Excel
-                    ExcelService.writeTranslationsToExcel(fileNames, translations, file.getAbsolutePath());
-
-                } catch (Exception e) {
-                    // Log degli errori nel caso qualcosa vada storto
-                    System.err.println("Errore durante il processo di generazione Excel: " + e.getMessage());
-                    e.printStackTrace();
-                }
-                return null;
+                return generateExcel(file);
             }
 
             @Override
             protected void succeeded() {
                 super.succeeded();
-                // Nascondi il ProgressIndicator quando il processo è terminato
-                progressIndicator.setVisible(false);
-                System.out.println("Processo completato con successo.");
-
-                // Mostra un alert di successo con immagine
-                showAlert(AlertType.INFORMATION, "Operazione completata", "Il file Excel è stato generato con successo.");
+                onSuccess();
             }
 
             @Override
             protected void failed() {
                 super.failed();
-                // Nascondi il ProgressIndicator in caso di errore
-                progressIndicator.setVisible(false);
-                System.err.println("Errore durante il processo.");
-
-                // Mostra un alert di errore con immagine
-                showAlert(AlertType.ERROR, "Errore durante l'operazione", "Si è verificato un errore durante la generazione del file Excel.");
+                onFailure();
             }
         };
 
@@ -125,6 +98,52 @@ public class ConvertAudioController {
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
+    }
+
+    private Void generateExcel(File file) throws Exception {
+        try {
+            // Ottieni il percorso della risorsa
+            File modelFile = loadModelFile();
+
+            AudioRecognitionService audioRecognitionService = new AudioRecognitionService(modelFile.getAbsolutePath());
+            TranslationService translationService = new TranslationService();
+
+            List<String> fileNames = audioRecognitionService.getFileNames(selectedFolder.getAbsolutePath());
+            List<String> recognizedTexts = audioRecognitionService.getRecognizedTexts(fileNames, selectedFolder.getAbsolutePath());
+            List<String> translations = translationService.getTranslations(recognizedTexts);
+
+            // Scrivi i dati nel file Excel
+            ExcelService.writeTranslationsToExcel(fileNames, translations, file.getAbsolutePath());
+
+        } catch (Exception e) {
+            // Log degli errori
+            System.err.println("Errore durante il processo di generazione Excel: " + e.getMessage());
+            e.printStackTrace();
+            throw e; // Rilancia l'eccezione per gestirla nel metodo failed()
+        }
+        return null;
+    }
+
+    private File loadModelFile() {
+        ClassLoader classLoader = AudioRecognitionService.class.getClassLoader();
+        File modelFile = new File(Objects.requireNonNull(classLoader.getResource("models/vosk-model-en-us-0.22-lgraph")).getFile());
+
+        if (!modelFile.exists()) {
+            throw new IllegalArgumentException("Modello non trovato: " + modelFile.getAbsolutePath());
+        }
+        return modelFile;
+    }
+
+    private void onSuccess() {
+        progressIndicator.setVisible(false);
+        System.out.println("Processo completato con successo.");
+        showAlert(AlertType.INFORMATION, "Operazione completata", "Il file Excel è stato generato con successo.");
+    }
+
+    private void onFailure() {
+        progressIndicator.setVisible(false);
+        System.err.println("Errore durante il processo.");
+        showAlert(AlertType.ERROR, "Errore durante l'operazione", "Si è verificato un errore durante la generazione del file Excel.");
     }
 
     // Metodo per mostrare un alert (modale) con immagine
