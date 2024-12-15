@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="661.0" prefWidth="831.0" styleClass="body" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.projects.translate.ui.controller.ConvertAudioController">
+    <stylesheets>
+        <URL value="@../css/convertAudio.css"/>
+    </stylesheets>
+
+    <!-- Center section (form with button) -->
+    <center>
+        <VBox alignment="TOP_CENTER" prefHeight="464.0" prefWidth="530.0" spacing="10">
+            <Label contentDisplay="CENTER" prefHeight="41.0" prefWidth="225.0" styleClass="custom-label"
+                   text="Seleziona una cartella:">
+                <VBox.margin>
+                    <Insets/>
+                </VBox.margin>
+                <font>
+                    <Font size="10.0"/>
+                </font>
+            </Label>
+            <Button focusTraversable="false" onAction="#onChooseFolder" styleClass="custom-button"
+                    text="Scegli una cartella"/> <!-- Label per mostrare la cartella selezionata -->
+            <Label fx:id="selectedFolderLabel" layoutX="50" layoutY="100" style="-fx-font-weight: bold;"
+                   text="Cartella selezionata: Nessuna"/>
+
+            <!-- ProgressIndicator per mostrare il messaggio "Attendere..." -->
+            <ProgressIndicator fx:id="progressIndicator" layoutX="150" layoutY="200" visible="false"/>
+
+            <Button focusTraversable="false" onAction="#onGenerateExcel" styleClass="custom-button"
+                    text="Genera File Excel"/>
+            <BorderPane.margin>
+                <Insets top="10.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </center>
+
+    <!-- Bottom section (label) -->
+    <bottom>
+        <VBox alignment="TOP_CENTER">
+            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;"
+                   text="Developed by Emanuele Pisaturo | © 2024 All Rights Reserved for the application. "
+                   BorderPane.alignment="CENTER"/>
+            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;"
+                   text="Trademarks and copyrights of the original game belong to their respective owners."
+                   BorderPane.alignment="CENTER"/>
+        </VBox>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,21 @@
+# Directory di build
+/target/
+/out/
+
+# File di configurazione IDE
+/.idea/
+/*.iml
+/.vscode/
+
+# File di sistema
+.DS_Store
+Thumbs.db
+
+# File di log
+*.log
+
+# Altri file temporanei
+*.class
+*.jar
+*.war
+*.ear

@@ -1,7 +1,5 @@
 package it.projects.translate.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vosk.Model;
 import org.vosk.Recognizer;
 
@@ -14,16 +12,16 @@ import java.util.List;
 
 public class AudioRecognitionService {
 
-    private static final Logger log = LoggerFactory.getLogger(AudioRecognitionService.class);
     private final Model model;
 
     public AudioRecognitionService(String modelPath) throws IOException {
-        log.info("Caricamento del modello Vosk da: {}", modelPath);
+        LoggerService.checkAndCreateLogFile();
+        LoggerService.logToFile("Caricamento del modello Vosk da: " + modelPath);
         this.model = new Model(modelPath);
     }
 
     public List<String> getFileNames(String directoryPath) {
-        log.info("Lettura dei file audio dalla directory: {}", directoryPath);
+        LoggerService.logToFile("Lettura dei file audio dalla directory: " + directoryPath);
         File folder = new File(directoryPath);
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".wav"));
 
@@ -31,28 +29,29 @@ public class AudioRecognitionService {
         if (files != null) {
             for (File file : files) {
                 fileNames.add(file.getName());
-                log.info("Trovato file audio: {}", file.getName());
+                LoggerService.logToFile("Trovato file audio: " + file.getName());
             }
         } else {
-            log.info("Nessun file .wav trovato nella directory specificata.");
+            LoggerService.logToFile("Nessun file .wav trovato nella directory specificata.");
         }
         return fileNames;
     }
 
     public List<String> getRecognizedTexts(List<String> fileNames, String directoryPath) {
-        log.info("Avvio del processo di riconoscimento del testo dai file audio.");
+        LoggerService.logToFile("Avvio del processo di riconoscimento del testo dai file audio.");
         List<String> recognizedTexts = new ArrayList<>();
         for (String fileName : fileNames) {
             File audioFile = new File(directoryPath + "/" + fileName);
-            log.info("Processando il file: {}", fileName);
+            LoggerService.logToFile("Processando il file: " + fileName);
             String recognizedText = recognizeAudio(audioFile);
             recognizedTexts.add(recognizedText);
-            log.info("Testo riconosciuto per {}: {}", fileName, recognizedText);
+            LoggerService.logToFile("Testo riconosciuto per " + fileName + ": " + recognizedText);
         }
         return recognizedTexts;
     }
 
     private String recognizeAudio(File audioFile) {
+        String finalResult = "";
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(audioFile));
              AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(bufferedInputStream)) {
 
@@ -64,12 +63,12 @@ public class AudioRecognitionService {
                 recognizer.acceptWaveForm(buffer, buffer.length);
             }
 
-            String finalResult = recognizer.getFinalResult();
-            log.info("Risultato finale ottenuto dal riconoscimento audio.");
-            return finalResult;
+            finalResult = recognizer.getFinalResult();
+            LoggerService.logToFile("Risultato finale ottenuto dal riconoscimento audio.");
+
         } catch (Exception e) {
-            log.info("Errore durante il riconoscimento audio: {}", e.getMessage());
-            return "";
+            LoggerService.logToFile("Errore durante il riconoscimento audio: " + e.getMessage());
         }
+        return finalResult;
     }
 }
