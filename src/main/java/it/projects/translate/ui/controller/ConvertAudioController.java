@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class ConvertAudioController {
 
@@ -42,7 +43,16 @@ public class ConvertAudioController {
         File file = fileChooser.showSaveDialog(new Stage());
 
         if (file != null) {
-            AudioRecognitionService audioRecognitionService = new AudioRecognitionService(Constant.MODEL_PATH);
+
+            // Ottieni il percorso della risorsa
+            ClassLoader classLoader = AudioRecognitionService.class.getClassLoader();
+            File modelFile = new File(Objects.requireNonNull(classLoader.getResource(Constant.MODEL_PATH)).getFile());
+
+            if (!modelFile.exists()) {
+                throw new IllegalArgumentException("Modello non trovato: " + modelFile.getAbsolutePath());
+            }
+
+            AudioRecognitionService audioRecognitionService = new AudioRecognitionService(modelFile.getAbsolutePath());
             TranslationService translationService = new TranslationService();
 
             List<String> fileNames = audioRecognitionService.getFileNames(selectedFolder.getAbsolutePath());

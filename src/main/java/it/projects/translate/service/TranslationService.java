@@ -1,11 +1,13 @@
 package it.projects.translate.service;
 
+import it.projects.translate.utils.Constant;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TranslationService {
 
@@ -26,7 +28,15 @@ public class TranslationService {
             JSONObject jsonObject = new JSONObject(text);
             String textToTranslate = jsonObject.getString("text");
 
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "data/script/translate.py", textToTranslate);
+            // Ottieni il percorso della risorsa
+            ClassLoader classLoader = TranslationService.class.getClassLoader();
+            File scriptFile = new File(Objects.requireNonNull(classLoader.getResource(Constant.SCRIPT_PYTHON_PATH)).getFile());
+
+            if (!scriptFile.exists()) {
+                throw new IllegalArgumentException("Script non trovato: " + scriptFile.getAbsolutePath());
+            }
+
+            ProcessBuilder processBuilder = new ProcessBuilder("python", scriptFile.getAbsolutePath(), textToTranslate);
             processBuilder.environment().put("PYTHONIOENCODING", "utf-8");
             Process process = processBuilder.start();
 
