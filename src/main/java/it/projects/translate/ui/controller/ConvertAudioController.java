@@ -5,6 +5,7 @@ import it.projects.translate.service.ExcelService;
 import it.projects.translate.service.TranslationService;
 import it.projects.translate.utils.Constant;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,6 +19,10 @@ public class ConvertAudioController {
 
     private File selectedFolder;
 
+    // Aggiungi il riferimento alla Label per visualizzare la cartella selezionata
+    @FXML
+    private Label selectedFolderLabel;
+
     @FXML
     public void onChooseFolder() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -27,6 +32,9 @@ public class ConvertAudioController {
         if (folder != null) {
             selectedFolder = folder;
             System.out.println("Selected folder: " + folder.getAbsolutePath());
+
+            // Aggiorna la label con il nome della cartella selezionata
+            selectedFolderLabel.setText("Cartella selezionata: " + folder.getName());
         }
     }
 
