@@ -54,8 +54,11 @@ public class LoggerService {
         System.out.println(logMessage);
     }
 
-    private static void setDirectoryFile(String directoryFile) {
+    public static void setDirectoryFile(String directoryFile) {
         LoggerService.directoryFile = directoryFile;
     }
 
+    public static String getDirectoryFile() {
+        return directoryFile;
+    }
 }
