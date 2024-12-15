@@ -9,6 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ProgressIndicator?>
 <BorderPane prefHeight="661.0" prefWidth="831.0" styleClass="body" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.projects.translate.ui.controller.ConvertAudioController">
@@ -31,6 +32,10 @@
             <Button focusTraversable="false" onAction="#onChooseFolder" styleClass="custom-button"
                     text="Scegli una cartella"/> <!-- Label per mostrare la cartella selezionata -->
             <Label fx:id="selectedFolderLabel" style="-fx-font-weight: bold;" text="Cartella selezionata: Nessuna" layoutX="50" layoutY="100" />
+
+            <!-- ProgressIndicator per mostrare il messaggio "Attendere..." -->
+            <ProgressIndicator fx:id="progressIndicator" visible="false" layoutX="150" layoutY="200" />
+
             <Button focusTraversable="false" onAction="#onGenerateExcel" styleClass="custom-button"
                     text="Genera File Excel"/>
             <BorderPane.margin>
