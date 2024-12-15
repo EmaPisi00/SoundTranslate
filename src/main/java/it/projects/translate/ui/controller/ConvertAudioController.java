@@ -10,7 +10,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,7 +17,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 public class ConvertAudioController {
 
@@ -125,9 +123,7 @@ public class ConvertAudioController {
     }
 
     private File loadModelFile() {
-        ClassLoader classLoader = AudioRecognitionService.class.getClassLoader();
-        File modelFile = new File(Objects.requireNonNull(classLoader.getResource("models/vosk-model-en-us-0.22-lgraph")).getFile());
-
+        File modelFile = new File("vosk-model-en-us-0.22-lgraph");
         if (!modelFile.exists()) {
             throw new IllegalArgumentException("Modello non trovato: " + modelFile.getAbsolutePath());
         }
