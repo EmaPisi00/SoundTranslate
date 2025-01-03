@@ -1,5 +1,5 @@
 # Directory di build
-/target/
+target/
 /out/
 
 # File di configurazione IDE
