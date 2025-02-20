@@ -1,8 +1,8 @@
 .custom-label {
     -fx-font-size: 18px; /* Ingrandisce la dimensione del font */
     -fx-font-weight: bold; /* Testo in grassetto */
-    -fx-font-family: 'Arial'; /* Font migliorato (puoi anche usare altri font come 'Verdana', 'Tahoma', 'Roboto', ecc.) */
-    -fx-text-fill: #333333; /* Colore del testo */
+    -fx-font-family: 'Bahnschrift'; /* Font migliorato (puoi anche usare altri font come 'Verdana', 'Tahoma', 'Roboto', ecc.) */
+    -fx-text-fill: #ffffff; /* Colore del testo */
     -fx-padding: 10px; /* Distanza dal bordo */
     -fx-margin: 20px; /* Margine per separare il Label dagli altri elementi */
     -fx-alignment: center; /* Allinea il testo al centro */
@@ -34,16 +34,6 @@
 
 .custom-button:pressed {
     -fx-background-color: #0127e6; /* Colore verde quando premuto */
-}
-
-.custom-label {
-    -fx-font-size: 18px; /* Ingrandisce la dimensione del font */
-    -fx-font-weight: bold; /* Testo in grassetto */
-    -fx-font-family: 'Arial'; /* Font migliorato (puoi anche usare altri font come 'Verdana', 'Tahoma', 'Roboto', ecc.) */
-    -fx-text-fill: #333333; /* Colore del testo */
-    -fx-padding: 10px; /* Distanza dal bordo */
-    -fx-margin: 20px; /* Margine per separare il Label dagli altri elementi */
-    -fx-alignment: center; /* Allinea il testo al centro */
 }
 
 .body {

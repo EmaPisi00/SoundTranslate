@@ -5,41 +5,87 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="661.0" prefWidth="831.0" styleClass="body" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.projects.translate.ui.controller.ConvertAudioController">
+<BorderPane prefHeight="661.0" prefWidth="831.0" styleClass="body" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.projects.translate.ui.controller.ConvertAudioController">
     <stylesheets>
-        <URL value="@../css/convertAudio.css"/>
+        <URL value="@../css/convertAudio.css" />
     </stylesheets>
 
     <!-- Center section (form with button) -->
     <center>
         <VBox alignment="TOP_CENTER" prefHeight="464.0" prefWidth="530.0" spacing="10">
-            <Label contentDisplay="CENTER" prefHeight="41.0" prefWidth="225.0" styleClass="custom-label"
-                   text="Seleziona una cartella:">
+         <Label text="Converti File Audio" textFill="#77ff00">
+            <VBox.margin>
+               <Insets bottom="20.0" top="10.0" />
+            </VBox.margin>
+            <font>
+               <Font name="Forte" size="36.0" />
+            </font>
+         </Label>
+            <Label contentDisplay="CENTER" prefHeight="41.0" styleClass="custom-label" text="Seleziona una cartella da cui importare i file audio" textFill="WHITE">
                 <VBox.margin>
-                    <Insets/>
+                    <Insets />
                 </VBox.margin>
                 <font>
-                    <Font size="10.0"/>
+                    <Font name="Forte" size="10.0" />
                 </font>
             </Label>
-            <Button focusTraversable="false" onAction="#onChooseFolder" styleClass="custom-button"
-                    text="Scegli una cartella"/> <!-- Label per mostrare la cartella selezionata -->
-            <Label fx:id="selectedFolderLabel" layoutX="50" layoutY="100" style="-fx-font-weight: bold;"
-                   text="Cartella selezionata: Nessuna"/>
+         <HBox alignment="CENTER" prefHeight="14.0" prefWidth="831.0">
+            <children>
+               <TextField fx:id="folderPathInputField" focusTraversable="false" prefHeight="34.0" prefWidth="462.0">
+                  <HBox.margin>
+                     <Insets left="10.0" right="10.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </TextField>
+                  <Button focusTraversable="false" onAction="#onChooseFolder" styleClass="custom-button" text="Scegli una cartella" />
+            </children>
+            <VBox.margin>
+               <Insets bottom="-5.0" top="-10.0" />
+            </VBox.margin>
+         </HBox> <!-- Label per mostrare la cartella selezionata -->
+            <Label fx:id="selectedFolderInputLabel" style="-fx-font-weight: bold;" text="Cartella selezionata: Nessuna" textFill="WHITE" />
+         <Label contentDisplay="CENTER" prefHeight="41.0" styleClass="custom-label" text="Seleziona una cartella in cui importare il file excel" textFill="WHITE">
+            <font>
+               <Font size="10.0" />
+            </font>
+            <VBox.margin>
+               <Insets top="100.0" />
+            </VBox.margin>
+         </Label>
+         <HBox alignment="CENTER" prefHeight="37.0" prefWidth="736.0">
+            <children>
+               <TextField fx:id="folderPathOutputField" focusTraversable="false" prefHeight="34.0" prefWidth="462.0">
+                  <HBox.margin>
+                     <Insets left="10.0" right="10.0" />
+                  </HBox.margin>
+               </TextField>
+      
+                  <Button focusTraversable="false" onAction="#onChooseFolderExcel" styleClass="custom-button" text="Scegli una cartella" />
+            </children>
+            <VBox.margin>
+               <Insets bottom="-70.0" top="-15.0" />
+            </VBox.margin>
+         </HBox>
 
             <!-- ProgressIndicator per mostrare il messaggio "Attendere..." -->
-            <ProgressIndicator fx:id="progressIndicator" layoutX="150" layoutY="200" visible="false"/>
-
-            <Button focusTraversable="false" onAction="#onGenerateExcel" styleClass="custom-button"
-                    text="Genera File Excel"/>
+            <ProgressIndicator fx:id="progressIndicator" layoutX="150" layoutY="200" visible="false" />
+         <Label fx:id="selectedFolderOutputLabel" style="-fx-font-weight: bold;" text="Cartella selezionata: Nessuna" textFill="WHITE" />
+         <Button focusTraversable="false" onAction="#onGenerateExcel" styleClass="custom-button" text="Genera File Excel">
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </Button>
+         <Label textFill="WHITE" fx:id="timeRemainingLabel" />
             <BorderPane.margin>
-                <Insets top="10.0"/>
+                <Insets top="10.0" />
             </BorderPane.margin>
         </VBox>
     </center>
@@ -47,12 +93,8 @@
     <!-- Bottom section (label) -->
     <bottom>
         <VBox alignment="TOP_CENTER">
-            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;"
-                   text="Developed by Emanuele Pisaturo | © 2024 All Rights Reserved for the application. "
-                   BorderPane.alignment="CENTER"/>
-            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;"
-                   text="Trademarks and copyrights of the original game belong to their respective owners."
-                   BorderPane.alignment="CENTER"/>
+            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;" text="Developed by Emanuele Pisaturo | © 2024 All Rights Reserved for the application. " BorderPane.alignment="CENTER" />
+            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;" text="Trademarks and copyrights of the original game belong to their respective owners." BorderPane.alignment="CENTER" />
         </VBox>
     </bottom>
 
