@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -22,7 +23,7 @@ public class ConvertAudioMain extends Application {
 
         // Imposta la scena e la finestra principale
         primaryStage.setTitle("Convert Audio Tool");
-        primaryStage.setScene(new Scene(root, 831, 661)); // Dimensioni di default
+        primaryStage.setScene(new Scene(root, 790, 790)); // Dimensioni di default
 
         primaryStage.setResizable(false);
         primaryStage.show();

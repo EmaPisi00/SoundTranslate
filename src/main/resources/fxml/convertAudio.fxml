@@ -93,8 +93,8 @@
     <!-- Bottom section (label) -->
     <bottom>
         <VBox alignment="TOP_CENTER">
-            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;" text="Developed by Emanuele Pisaturo | © 2024 All Rights Reserved for the application. " BorderPane.alignment="CENTER" />
-            <Label alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 11px;" text="Trademarks and copyrights of the original game belong to their respective owners." BorderPane.alignment="CENTER" />
+            <Label alignment="CENTER" styleClass="custom-label" textFill="WHITE" text="Developed by Emanuele Pisaturo | © 2024 All Rights Reserved for the application. " BorderPane.alignment="CENTER" />
+            <Label alignment="CENTER" styleClass="custom-label" textFill="WHITE" text="Trademarks and copyrights of the original game belong to their respective owners." BorderPane.alignment="CENTER" />
         </VBox>
     </bottom>
 

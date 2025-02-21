@@ -1,44 +1,74 @@
-.custom-label {
-    -fx-font-size: 18px; /* Ingrandisce la dimensione del font */
-    -fx-font-weight: bold; /* Testo in grassetto */
-    -fx-font-family: 'Bahnschrift'; /* Font migliorato (puoi anche usare altri font come 'Verdana', 'Tahoma', 'Roboto', ecc.) */
-    -fx-text-fill: #ffffff; /* Colore del testo */
-    -fx-padding: 10px; /* Distanza dal bordo */
-    -fx-margin: 20px; /* Margine per separare il Label dagli altri elementi */
-    -fx-alignment: center; /* Allinea il testo al centro */
-}
-
-.custom-button {
-    -fx-font-size: 14px; /* Imposta la dimensione del font */
-    -fx-font-family: 'Arial'; /* Imposta il font */
-    -fx-background-color: #0127e6; /* Colore di sfondo del pulsante */
-    -fx-text-fill: white; /* Colore del testo del pulsante */
-    -fx-padding: 10px 20px; /* Padding per dare un po' di spazio interno */
-    -fx-border-radius: 20px; /* Angoli molto arrotondati */
-    -fx-background-radius: 20px; /* Angoli arrotondati anche per lo sfondo */
-    -fx-cursor: hand; /* Cambia il cursore a mano quando si passa sopra il pulsante */
-    -fx-transition: background-color 0.3s ease; /* Aggiungi una transizione per il colore di sfondo */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2); /* Ombra leggera per dare profondità */
-}
-
-.custom-button:hover {
-    -fx-background-color: #0127e6; /* Cambia il colore di sfondo quando si passa sopra il pulsante */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 7, 0, 4, 4); /* Ombra più forte al passaggio del mouse */
-}
-
-.custom-button:focused {
-    -fx-background-color: #0127e6; /* Colore verde scuro quando il pulsante è in focus */
-    -fx-border-color: #0127e6; /* Colore del bordo quando in focus */
-    -fx-border-width: 2px; /* Larghezza del bordo quando in focus */
-}
-
-.custom-button:pressed {
-    -fx-background-color: #0127e6; /* Colore verde quando premuto */
-}
-
+/* Miglioramento generale */
 .body {
-    -fx-background-image: url("../img/sfondo.jpg");
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
-    -fx-background-position: center;
+    -fx-background-color: linear-gradient(to right, #000000, #333333); /* Da nero a grigio scuro */
+    -fx-border-color: #ffffff; /* Bordo bianco per contrasto */
+    -fx-text-fill: white;
+}
+
+/* Label personalizzate */
+.custom-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Bahnschrift';
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px;
+    -fx-margin: 20px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 3, 0, 2, 2); /* Ombra per migliorare leggibilità */
+}
+
+.dark-label {
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.7), 3, 0, 2, 2);
+}
+
+
+/* Pulsanti migliorati */
+.custom-button {
+    -fx-font-size: 16px;
+    -fx-font-family: 'Arial';
+    -fx-background-color: linear-gradient(to bottom, #0056ff, #0033cc); /* Gradiente per un effetto più elegante */
+    -fx-text-fill: white;
+    -fx-padding: 12px 24px;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 3, 3);
+}
+
+/* Effetto hover */
+.custom-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #006eff, #0044cc);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Effetto pressione */
+.custom-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #0044cc, #002299);
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/* TextField personalizzato */
+.text-field {
+    -fx-font-size: 14px;
+    -fx-font-family: 'Arial';
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-text-fill: #000000;
+    -fx-border-color: #0056ff;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 8px;
+    -fx-transition: all 0.3s ease;
+}
+
+/* Effetto quando il TextField è selezionato */
+.text-field:focused {
+    -fx-border-color: #77ff00;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(119, 255, 0, 0.7), 8, 0, 2, 2);
 }
