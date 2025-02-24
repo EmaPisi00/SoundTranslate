@@ -5,12 +5,14 @@ import it.projects.translate.service.ExcelService;
 import it.projects.translate.service.TranslationService;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,7 +20,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import javafx.scene.effect.GaussianBlur;
 
 public class ConvertAudioController {
 
@@ -29,10 +30,7 @@ public class ConvertAudioController {
     private Label selectedFolderOutputLabel;
 
     @FXML
-    private ProgressIndicator progressIndicator;
-
-    @FXML
-    private TextField folderPathInputField; // TextField dove l'utente può incollare il percorso
+    private TextField folderPathInputField;
 
     @FXML
     private TextField folderPathOutputField;
@@ -51,21 +49,16 @@ public class ConvertAudioController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Folder");
 
-        // Se il campo di testo ha un percorso valido, usalo come cartella iniziale
         File initialDirectory = new File(folderPathInputField.getText());
         if (initialDirectory.exists() && initialDirectory.isDirectory()) {
             directoryChooser.setInitialDirectory(initialDirectory);
         } else {
-            directoryChooser.setInitialDirectory(selectedInputFolder); // Usa la cartella predefinita
+            directoryChooser.setInitialDirectory(selectedInputFolder);
         }
 
         File folder = directoryChooser.showDialog(new Stage());
-
         if (folder != null) {
             selectedInputFolder = folder;
-            System.out.println("Selected folder: " + folder.getAbsolutePath());
-
-            // Aggiorna il campo di testo e la label con il percorso selezionato
             folderPathInputField.setText(folder.getAbsolutePath());
             selectedFolderInputLabel.setText("Cartella selezionata: " + folder.getName());
         }
@@ -76,21 +69,16 @@ public class ConvertAudioController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Folder");
 
-        // Se il campo di testo ha un percorso valido, usalo come cartella iniziale
         File initialDirectory = new File(folderPathOutputField.getText());
         if (initialDirectory.exists() && initialDirectory.isDirectory()) {
             directoryChooser.setInitialDirectory(initialDirectory);
         } else {
-            directoryChooser.setInitialDirectory(selectedOutputFolder); // Usa la cartella predefinita
+            directoryChooser.setInitialDirectory(selectedOutputFolder);
         }
 
         File folder = directoryChooser.showDialog(new Stage());
-
         if (folder != null) {
             selectedOutputFolder = folder;
-            System.out.println("Selected folder: " + folder.getAbsolutePath());
-
-            // Aggiorna il campo di testo e la label con il percorso selezionato
             folderPathOutputField.setText(folder.getAbsolutePath());
             selectedFolderOutputLabel.setText("Cartella selezionata: " + folder.getName());
         }
@@ -103,17 +91,8 @@ public class ConvertAudioController {
             return;
         }
 
-        // Seleziona il file di output
         File file = chooseOutputFile();
-        if (file == null) {
-            System.out.println("No file selected for saving.");
-            return;
-        }
 
-        // Mostra il ProgressIndicator
-        progressIndicator.setVisible(true);
-
-        // Avvia il task per la generazione dell'Excel
         startGenerationTask(file);
     }
 
@@ -121,30 +100,36 @@ public class ConvertAudioController {
         String folderPath = folderPathOutputField.getText();
         File outputDirectory = new File(folderPath);
 
-        // Verifica se la cartella esiste, altrimenti usa la cartella predefinita
         if (!outputDirectory.exists() || !outputDirectory.isDirectory()) {
             outputDirectory = selectedOutputFolder;
         }
 
-        // Ottieni il nome del file dall'input dell'utente
-        String filePath = folderPathOutputField.getText().trim(); // Ottieni il percorso dal TextField
+        String filePath = folderPathOutputField.getText().trim();
         File file = new File(filePath);
+        String fileName = file.getName();
 
-        String fileName = file.getName(); // Estrai solo il nome del file
-
-        // Se il percorso è vuoto o non contiene un file valido, assegna un nome predefinito
         if (filePath.isEmpty() || !fileName.contains(".")) {
-            fileName = "file_output.xlsx";
+            fileName = "file_output_0.xlsx";
         }
 
-        System.out.println("Nome del file: " + fileName);
+        int startIndex = fileName.indexOf("file_output_") + "file_output_".length();
+        int endIndex = fileName.indexOf(".");
+        String number = fileName.substring(startIndex, endIndex).trim();
 
+        int i = Integer.parseInt(number);
+        File outputFile;
+        do {
+            i++; // Aggiungi 1 al numero
+            fileName = "file_output_" + i + ".xlsx";
+            outputFile = new File(outputDirectory, fileName);
+        } while (outputFile.exists());
 
-        // Crea il file nella cartella selezionata
         return new File(outputDirectory, fileName);
     }
 
     private void startGenerationTask(File file) {
+        Stage loadingStage = createLoadingStage(); // Crea uno stage separato per ogni esecuzione
+
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -154,27 +139,48 @@ public class ConvertAudioController {
             @Override
             protected void succeeded() {
                 super.succeeded();
-                onSuccess();
+                onSuccess(loadingStage);
             }
 
             @Override
             protected void failed() {
                 super.failed();
-                onFailure();
+                onFailure(loadingStage);
             }
         };
 
-        // Avvia il task in un nuovo thread
         Thread thread = new Thread(task);
         thread.setDaemon(true);
+        loadingStage.show();
+        folderPathInputField.setText("");
+        folderPathOutputField.setText("");
         thread.start();
+    }
+
+    private Stage createLoadingStage() {
+        Stage loadingStage = new Stage();
+        String inputLabel = selectedFolderInputLabel.getText();
+        loadingStage.setTitle("Conversione file:  " + inputLabel.substring(inputLabel.indexOf(":") + 1).trim());
+
+        Image image = new Image(String.valueOf(getClass().getResource("/img/icon.jpg")));
+        loadingStage.getIcons().add(image);
+
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        Label label = new Label("Attendere...");
+
+        VBox vbox = new VBox(10, progressIndicator, label);
+        vbox.setStyle("-fx-padding: 20px; -fx-alignment: center;");
+        Scene scene = new Scene(vbox, 350, 250);
+        loadingStage.setScene(scene);
+
+        loadingStage.setAlwaysOnTop(true);
+        loadingStage.setResizable(false);
+        return loadingStage;
     }
 
     private Void generateExcel(File file) throws Exception {
         try {
-            // Ottieni il percorso della risorsa
             File modelFile = loadModelFile();
-
             AudioRecognitionService audioRecognitionService = new AudioRecognitionService(modelFile.getAbsolutePath());
             TranslationService translationService = new TranslationService();
 
@@ -182,14 +188,11 @@ public class ConvertAudioController {
             List<String> recognizedTexts = audioRecognitionService.getRecognizedTexts(fileNames, selectedInputFolder.getAbsolutePath());
             List<String> translations = translationService.getTranslations(recognizedTexts);
 
-            // Scrivi i dati nel file Excel
             ExcelService.writeTranslationsToExcel(fileNames, translations, file.getAbsolutePath());
-
         } catch (Exception e) {
-            // Log degli errori
             System.err.println("Errore durante il processo di generazione Excel: " + e.getMessage());
             e.printStackTrace();
-            throw e; // Rilancia l'eccezione per gestirla nel metodo failed()
+            throw e;
         }
         return null;
     }
@@ -202,47 +205,42 @@ public class ConvertAudioController {
         return modelFile;
     }
 
-    private void onSuccess() {
-        progressIndicator.setVisible(false);
+    private void onSuccess(Stage loadingStage) {
         System.out.println("Processo completato con successo.");
         showAlert(AlertType.INFORMATION, "Operazione completata", "Il file Excel è stato generato con successo.");
+        loadingStage.close();
     }
 
-    private void onFailure() {
-        progressIndicator.setVisible(false);
+    private void onFailure(Stage loadingStage) {
         System.err.println("Errore durante il processo.");
         showAlert(AlertType.ERROR, "Errore durante l'operazione", "Si è verificato un errore durante la generazione del file Excel.");
+        loadingStage.close();
     }
 
-    // Metodo per mostrare un alert (modale) con immagine
     private void showAlert(AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        // Carica l'immagine dal percorso delle risorse
         Image image = new Image(String.valueOf(getClass().getResource("/img/icon.jpg")));
-
-        // Imposta l'immagine come icona della finestra dell'alert
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(image); // Aggiunge l'icona della finestra
+        stage.getIcons().add(image);
 
         alert.showAndWait();
     }
 
-    // Metodo per centralizzare la logica del listener e aggiornare le label di input e output
     private void setupFolderPathListener(TextField textField, Label label, boolean isFolderPath) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             File file = new File(newValue);
 
-            if (isFolderPath) { // Se deve essere una cartella valida
+            if (isFolderPath) {
                 if (file.exists() && file.isDirectory()) {
                     label.setText("Cartella selezionata: " + file.getName());
                 } else {
                     label.setText("Percorso non valido");
                 }
-            } else { // Se deve essere un file (anche inesistente)
+            } else {
                 if (!newValue.trim().isEmpty()) {
                     label.setText("File selezionato: " + file.getName());
                 } else {
@@ -251,5 +249,4 @@ public class ConvertAudioController {
             }
         });
     }
-
 }
