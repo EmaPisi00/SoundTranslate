@@ -33,7 +33,7 @@ public class TranslationService {
             String textToTranslate = jsonObject.getString("text");
 
             // Ottieni il percorso della risorsa
-            File scriptFile = new File("translate.py");
+            File scriptFile = new File("py/translate.py");
 
             if (!scriptFile.exists()) {
                 throw new IllegalArgumentException("Script non trovato: " + scriptFile.getAbsolutePath());
