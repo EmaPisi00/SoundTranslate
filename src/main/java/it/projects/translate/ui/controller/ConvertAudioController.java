@@ -1,25 +1,20 @@
 package it.projects.translate.ui.controller;
 
-import it.projects.translate.service.AudioRecognitionService;
-import it.projects.translate.service.ExcelService;
-import it.projects.translate.service.TranslationService;
-import javafx.concurrent.Task;
+import it.projects.translate.service.ExcelGenerationTaskService;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class ConvertAudioController {
 
@@ -128,49 +123,76 @@ public class ConvertAudioController {
     }
 
     private void startGenerationTask(File file) {
-        Stage loadingStage = createLoadingStage(); // Crea uno stage separato per ogni esecuzione
+        Stage loadingStage = createLoadingStage();
+        VBox vbox = (VBox) loadingStage.getScene().getRoot();
 
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                return generateExcel(file);
-            }
+        Label loadingLabel = (Label) vbox.getChildren().get(1);
+        Label percentLabel = (Label) vbox.getChildren().get(2);
+        ProgressBar progressBar = (ProgressBar) vbox.getChildren().get(3);
+        Label progressLabel = (Label) vbox.getChildren().get(4);
+        Button okButton = (Button) vbox.getChildren().get(5);
 
-            @Override
-            protected void succeeded() {
-                super.succeeded();
-                onSuccess(loadingStage);
-            }
 
-            @Override
-            protected void failed() {
-                super.failed();
-                onFailure(loadingStage);
-            }
-        };
+        ExcelGenerationTaskService task = new ExcelGenerationTaskService(file, selectedInputFolder.getAbsolutePath(), percentLabel, progressLabel);
+
+        // Collega la progressProperty della Task alla ProgressBar
+        progressBar.progressProperty().bind(task.progressProperty());
+
+        task.setOnSucceeded(event -> {
+            onSuccess(loadingStage, percentLabel, loadingLabel, okButton);
+        });
+
+        task.setOnFailed(event -> {
+            onFailure(loadingStage);
+        });
 
         Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        loadingStage.show();
         folderPathInputField.setText("");
         folderPathOutputField.setText("");
+        thread.setDaemon(true);
+        loadingStage.show();
         thread.start();
     }
 
     private Stage createLoadingStage() {
         Stage loadingStage = new Stage();
         String inputLabel = selectedFolderInputLabel.getText();
-        loadingStage.setTitle("Conversione file:  " + inputLabel.substring(inputLabel.indexOf(":") + 1).trim());
+        loadingStage.setTitle("Traduzione");
 
         Image image = new Image(String.valueOf(getClass().getResource("/img/icon.jpg")));
         loadingStage.getIcons().add(image);
 
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        Label label = new Label("Attendere...");
+        // Titolo Stage
+        Label titleStage = new Label("Traduzione personaggio:  " +  inputLabel.substring(inputLabel.indexOf(":") + 1).trim());
+        titleStage.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: 'Times New Roman'");
 
-        VBox vbox = new VBox(10, progressIndicator, label);
+
+        // Percentuale di progresso
+        Label percentLabel = new Label("0%");
+        percentLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
+
+        // ProgressBar personalizzata
+        ProgressBar progressBar = new ProgressBar(0);
+        progressBar.setPrefWidth(300);
+        progressBar.setStyle("-fx-accent: #4CAF50;"); // Cambia colore della barra
+        progressBar.setEffect(new DropShadow(5, Color.GRAY)); // Aggiunge ombra
+
+        // Puntini di caricamento animati
+        Label loadingLabel = new Label("Attendere...");
+        loadingLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
+
+        // Label di avanzamento
+        Label progressLabel = new Label("1) Inizializzazione...");
+
+        // Button OK (inizialmente nascosto)
+        Button okButton = new Button("OK");
+        okButton.setFocusTraversable(false);
+        okButton.setVisible(false); // Il bottone OK è nascosto fino al completamento
+
+        // Layout
+        VBox vbox = new VBox(10,titleStage, loadingLabel, percentLabel, progressBar, progressLabel, okButton);
         vbox.setStyle("-fx-padding: 20px; -fx-alignment: center;");
-        Scene scene = new Scene(vbox, 350, 250);
+        Scene scene = new Scene(vbox, 330, 300);
         loadingStage.setScene(scene);
 
         loadingStage.setAlwaysOnTop(true);
@@ -178,37 +200,20 @@ public class ConvertAudioController {
         return loadingStage;
     }
 
-    private Void generateExcel(File file) throws Exception {
-        try {
-            File modelFile = loadModelFile();
-            AudioRecognitionService audioRecognitionService = new AudioRecognitionService(modelFile.getAbsolutePath());
-            TranslationService translationService = new TranslationService();
+    private void onSuccess(Stage loadingStage, Label percentLabel, Label loadingLabel, Button okButton) {
+        System.out.println("Generazione Excel completata.");
 
-            List<String> fileNames = audioRecognitionService.getFileNames(selectedInputFolder.getAbsolutePath());
-            List<String> recognizedTexts = audioRecognitionService.getRecognizedTexts(fileNames, selectedInputFolder.getAbsolutePath());
-            List<String> translations = translationService.getTranslations(recognizedTexts);
+        // Cambia il testo della percentuale
+        Platform.runLater(() -> {
+            percentLabel.setText("100%");
+            loadingLabel.setText("Completato!");
+        });
 
-            ExcelService.writeTranslationsToExcel(fileNames, translations, file.getAbsolutePath());
-        } catch (Exception e) {
-            System.err.println("Errore durante il processo di generazione Excel: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
-        return null;
-    }
-
-    private File loadModelFile() {
-        File modelFile = new File("vosk-model-en-us-0.22-lgraph");
-        if (!modelFile.exists()) {
-            throw new IllegalArgumentException("Modello non trovato: " + modelFile.getAbsolutePath());
-        }
-        return modelFile;
-    }
-
-    private void onSuccess(Stage loadingStage) {
-        System.out.println("Processo completato con successo.");
-        showAlert(AlertType.INFORMATION, "Operazione completata", "Il file Excel è stato generato con successo.");
-        loadingStage.close();
+        // Rendi visibile il bottone OK
+        Platform.runLater(() -> {
+            okButton.setVisible(true);
+            okButton.setOnAction(event -> loadingStage.close());
+        });
     }
 
     private void onFailure(Stage loadingStage) {
